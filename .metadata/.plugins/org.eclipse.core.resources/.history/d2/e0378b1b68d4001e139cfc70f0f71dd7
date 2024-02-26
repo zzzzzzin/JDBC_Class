@@ -1,0 +1,20 @@
+package com.test.java;
+
+public class Ex01 {
+	public static void main(String[] args) {
+		/*
+			JDBC, Java Database Connectivity
+			- 자바 응용 프로그램 <-> JDBC(연결) <-> 오라클 데이터베이스
+			- 중간 계층
+			- 영속성 계층(Persistence Layer)
+			- API > 클래스 집합
+		
+			1. JDBC
+			2. Spring-JDBC
+			3. MyBatis
+			4. JPA
+		
+		*/
+	}
+}
+

@@ -1,0 +1,25 @@
+package com.test.java;
+
+public class Ex03_Statement {
+	public static void main(String[] args) {
+		/*
+			Connection
+			- 연결/종료
+			
+			Statement
+			- 모든 SQL 실행하는 역할
+			
+			Statement 종류
+			1. Statement
+				- 기본
+				
+			2. PreparedStatement
+				- Statenemt 개량 > 매개 변수 처리 특화
+				
+			3. CallableStatement
+				- Statenemt 개량 > 프로시저 호출 전용
+				
+		
+		*/
+	}//main
+}

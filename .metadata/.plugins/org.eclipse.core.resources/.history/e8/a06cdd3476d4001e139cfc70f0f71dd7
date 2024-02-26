@@ -1,0 +1,92 @@
+package com.test.java;
+
+import java.sql.Connection;
+import java.sql.Statement;
+
+public class Ex03_Statement {
+	public static void main(String[] args) {
+		/*
+			Connection
+			- 연결/종료
+			
+			Statement
+			- 모든 SQL 실행하는 역할
+			
+			Statement 종류
+			1. Statement
+				- 기본
+				
+			2. PreparedStatement
+				- Statenemt 개량 > 매개 변수 처리 특화
+				
+			3. CallableStatement
+				- Statenemt 개량 > 프로시저 호출 전용
+				
+		
+		*/
+		m1();
+	}//main
+
+	private static void m1(){
+		
+		Connection conn = null;
+		Statement stat = null;
+		
+		try {
+			//1. 
+			conn = DBUtil.open();
+			
+			if (!conn.isClosed()) {
+				
+				//2.
+				//- 자바는 SQL을 모른다. > SQL을 문자열로 취급(아무 의미 X)
+				String sql = "insert into tblAddress (seq, name ,age, gender, tel, address, regdate) values (seqAddress.nextVal, '홍길동', 20, 'm', '010-1234-5678', '서울시 강남구 역삼동 한독빌딩', default);";
+				
+				stat= conn.createStatement();
+				
+				//반환값이 없는 쿼리
+				//- int stat.executeUpdate(sql)
+				
+				//반환값이 있는 쿼리
+				//- ResultSet.executeUpdate(sql)
+				
+				//SQL Developer > Ctrl + Enter 실행
+				int result = stat.executeUpdate(sql);
+				
+				if (result == 1) {
+					System.out.println("등록 성공");
+				} else {
+					System.out.println("등록 실패");
+				}
+				
+				//자원 정리
+				stat.close();
+				conn.close();
+				
+			}else {
+				System.out.println("DB 접속 실패");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Ex03_Statement.m1");
+			e.printStackTrace();
+		}
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+package com.test.java;
+
+public class Ex01 {
+	public static void main(String[] args) {
+		/*
+			JDBC, Java Database Connectivity
+			- 자바 응용 프로그램 <-> JDBC(연결) <-> 오라클 데이터베이스
+			- 중간 계층
+			- 영속성 계층(Persistence Layer)
+			- API > 클래스 집합
+		
+			1. JDBC
+			2. Spring-JDBC
+			3. MyBatis
+			4. JPA
+			
+			JDBC Driver 설치
+			- 각 DBMS 홈페이지 > 언어별 제공
+			
+			[사람 + SQL Developer <- (SQL) -> Oracle Server]
+			1. 클라이언트 툴 실행
+			2. DB 서버 접속
+				- 호스트명: localhost
+				- 포트번호: 1521
+				- SID: xe
+				- 드라이버 : thin
+				- 사용자명: hr
+				- 암호: java1234
+			3. 질의
+				- SQL 사용
+				3.1 반환값이 없는 쿼리
+					- select를 제외한 모든 쿼리
+
+				3.2 반환값(결과셋)이 있는 쿼리
+					- select
+					- 결과셋을 반환하는 쿼리
+				
+			[자바 + JDBC <- (SQL) -> Oracle Server]
+			
+			
+			
+			
+		*/
+	}
+}
+

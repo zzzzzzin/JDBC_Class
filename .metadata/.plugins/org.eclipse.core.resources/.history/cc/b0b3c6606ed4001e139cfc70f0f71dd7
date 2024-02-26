@@ -1,0 +1,24 @@
+package com.test.java;
+
+import java.sql.Connection;
+
+public class Ex02 {
+	public static void main(String[] args) {
+		
+		//접속시 발생하는 에러
+		//1. 
+		
+		try {
+			//Connection conn = DBUtil.open();
+			Connection conn = DBUtil.open("192.168.10.99" , "hr", "java1234");
+			
+			System.out.println(conn.isClosed());
+			
+			conn.close();	//faulse
+
+		} catch (Exception e) {
+			System.out.println("Ex02.main");
+			e.printStackTrace();
+		}
+	}
+}
