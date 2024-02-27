@@ -13,7 +13,217 @@ public class Ex04_select {
 //		m2();
 //		m3();
 //		m4();
-		m5();
+//		m5();	//내가 한거
+//		m6();	//강사님 답
+//		m7();	//select 오류 메세지
+//		m8();	//join할 때의 오류 메세지
+		m9();
+	}
+
+	private static void m9(){
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBUtil.open();
+			stat = conn.createStatement();
+			
+			//요구사항] 영업부 > 직원수와 직원명단 출력
+			//1. select count(*) as cnt from tblInsa where buseo = '영업부';
+			//2. select * from tblInsa where buseo = '영업부';
+			
+			//*** ResultSet의 특징
+			// - 커서를 가르키는 레코드의 정보 이외에는 알 수 없다.
+			
+			
+			String sql = "";
+			
+			sql = "select * from tblInsa where buseo = '영업부'";
+			rs = stat.executeQuery(sql);
+			
+			int count = 0;
+			
+			while(rs.next()) {
+				System.out.println(rs.getString("name"));
+				count++;
+			}
+			
+			rs.close();
+			
+			stat.close();
+			conn.close();
+			
+		} catch (Exception e) {
+			System.out.println("Ex04_select.m9");
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	private static void m8(){
+		
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBUtil.open();
+			stat = conn.createStatement();
+			
+			String sql = "select\r\n"
+					+ "m.name as mname, v.name as vname \r\n"
+					+ "from tblMember m\r\n"
+					+ "    inner join tblRent r\r\n"
+					+ "        on m.seq = r.member\r\n"
+					+ "            inner join tblVideo v\r\n"
+					+ "                on v.seq = r.video";
+			
+			rs = stat.executeQuery(sql);
+			
+			//누가? 뭘?
+			while(rs.next()) {
+//				System.out.println("누가: " + rs.getString("m.name"));
+//				System.out.println("무엇을: " + rs.getString("v.name"));
+				
+//				System.out.println("누가: " + rs.getString("1"));
+//				System.out.println("무엇을: " + rs.getString("2"));
+
+//				System.out.println("누가: " + rs.getString("name"));
+//				System.out.println("무엇을: " + rs.getString("name"));
+
+				System.out.println("누가: " + rs.getString("mname"));
+				System.out.println("무엇을: " + rs.getString("vname"));
+			}
+			
+			
+			rs.close();
+			
+			
+			stat.close();
+			conn.close();
+			
+			
+		} catch (Exception e) {
+			System.out.println("Ex04_select.m8");
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+	private static void m7(){
+		
+		//select > 오류 발생
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBUtil.open();
+			stat = conn.createStatement();
+			
+			//ORA-00904: "BUSE": 부적합한 식별자
+			//ORA-00942: 테이블 또는 뷰가 존재하지 않습니다.
+			String sql = "select name, buseo, jikwi from tblInsa";
+			
+			rs = stat.executeQuery(sql);
+			
+			while(rs.next()) {
+				//부적합한 열 이름
+				System.out.println(rs.getString("name"));
+				System.out.println(rs.getString("buseo"));
+				System.out.println(rs.getString("jikwi"));
+				System.out.println();
+			}
+			
+			
+			
+			
+			stat.close();
+			conn.close();
+			
+		} catch (Exception e) {
+			System.out.println("Ex04_select.m7");
+			e.printStackTrace();
+		}
+		
+	}
+
+	private static void m6(){
+		Scanner scan = new Scanner(System.in);
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBUtil.open();
+			stat = conn.createStatement();
+			
+			//1. 직원번호
+			String sql = "select num, name, buseo, jikwi from tblInsa order by num";
+			
+			rs = stat.executeQuery(sql);
+			
+			System.out.println("[번호]\t[이름]\t[부서]\t[직위]");
+			
+			while(rs.next()) {
+				//rs > 가르키는 레코드 > 직원 1명씩
+				System.out.printf("%s\t%s\t%s\t%s\n"
+									,rs.getString("num")
+									,rs.getString("name")
+									,rs.getString("buseo")
+									,rs.getString("jikwi"));
+			}
+			rs.close();
+			System.out.println();
+			
+			//2.
+			System.out.print("직원 번호: ");
+			String num = scan.nextLine();
+			
+			//3.
+			System.out.print("보너스 금액: ");
+			String bonus = scan.nextLine();
+			
+			//4.
+			sql = String.format("insert into tblBonus(seq, num, bonus) values (seqBonus.nextValm %s, %s)", num, bonus);
+			
+			int result = stat.executeUpdate(sql);
+			
+			//5. 직원번호, 이름, 부서, 직위, 보너스 금액
+			System.out.println();
+			sql = "select i.num, i.name, i.buseo, i.jikwi, b.bonus from tblBonus b inner join tblInsa i on b.num = i.num order by num";
+			
+			rs = stat.executeQuery(sql);
+			
+			System.out.println("[번호]\t[이름]\t[부서]\t[직위]\t[보너스]");
+			
+			while(rs.next()) {
+				System.out.printf("%s\t%s\t%s\t%s\t%,10d원\n"
+									, rs.getString("num")
+									, rs.getString("name")
+									, rs.getString("buseo")
+									, rs.getString("jikwi")
+									, rs.getInt("bonus"));
+			}
+			
+			System.out.println("종료");
+			
+			stat.close();
+			conn.close();
+			
+			
+		} catch (Exception e) {
+			System.out.println("Ex04_select.m6");
+			e.printStackTrace();
+		}
+		
 	}
 
 	private static void m5(){
