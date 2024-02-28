@@ -118,7 +118,7 @@ end procM5;
 /
 
 declare
-    vcursot SYS_REFCURSOR;
+    vcursor SYS_REFCURSOR;
     vrow tblInsa%rowtype;
 begin
     procM5('영업부', vcursor);
